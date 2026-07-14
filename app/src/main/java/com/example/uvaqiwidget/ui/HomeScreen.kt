@@ -1,5 +1,6 @@
 package com.example.uvaqiwidget.ui
 
+import com.example.uvaqiwidget.ui.components.UvCard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -36,27 +37,7 @@ fun HomeScreen(
             modifier = Modifier.height(24.dp)
         )
 
-        Card {
-
-            Column(
-                modifier = Modifier.padding(20.dp)
-            ) {
-
-                Text(
-                    text = "☀ UV Index",
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                Text(
-                    text = "7",
-                    style = MaterialTheme.typography.displayLarge
-                )
-
-                Text(
-                    text = "Высокий уровень"
-                )
-            }
-        }
+        UvCard()
 
         Spacer(
             modifier = Modifier.height(16.dp)
