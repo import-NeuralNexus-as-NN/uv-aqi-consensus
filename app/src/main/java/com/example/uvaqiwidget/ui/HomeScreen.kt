@@ -1,5 +1,6 @@
 package com.example.uvaqiwidget.ui
 
+import com.example.uvaqiwidget.ui.components.AqiCard
 import com.example.uvaqiwidget.ui.components.UvCard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,27 +43,7 @@ fun HomeScreen(
             modifier = Modifier.height(16.dp)
         )
 
-        Card {
-
-            Column(
-                modifier = Modifier.padding(20.dp)
-            ) {
-
-                Text(
-                    text = "🌫 AQI",
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                Text(
-                    text = "35",
-                    style = MaterialTheme.typography.displayLarge
-                )
-
-                Text(
-                    text = "Хорошее качество воздуха"
-                )
-            }
-        }
+        AqiCard()
 
         Spacer(
             modifier = Modifier.height(24.dp)
