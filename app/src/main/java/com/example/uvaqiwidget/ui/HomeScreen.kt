@@ -1,5 +1,9 @@
 package com.example.uvaqiwidget.ui
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.collectAsState
+import com.example.uvaqiwidget.viewmodel.WeatherViewModel
 import com.example.uvaqiwidget.data.AirQualityData
 import com.example.uvaqiwidget.ui.components.AqiCard
 import com.example.uvaqiwidget.ui.components.UvCard
@@ -19,8 +23,15 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: WeatherViewModel = viewModel()
 ) {
+    val uvIndex = viewModel.uvIndex.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadUvIndex()
+    }
+
     val data = AirQualityData(
         uvIndex = 7.0,
         aqi = 35,
@@ -45,7 +56,7 @@ fun HomeScreen(
         )
 
         UvCard(
-            uvIndex = data.uvIndex.toInt()
+            uvIndex = uvIndex.value.toInt()
         )
 
         Spacer(
