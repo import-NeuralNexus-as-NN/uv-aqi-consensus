@@ -1,5 +1,6 @@
 package com.example.uvaqiwidget.ui
 
+import com.example.uvaqiwidget.data.AirQualityData
 import com.example.uvaqiwidget.ui.components.AqiCard
 import com.example.uvaqiwidget.ui.components.UvCard
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,12 @@ import androidx.compose.ui.unit.dp
 fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
+    val data = AirQualityData(
+        uvIndex = 7.0,
+        aqi = 35,
+        location = "Berlin"
+    )
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -37,13 +44,17 @@ fun HomeScreen(
             modifier = Modifier.height(24.dp)
         )
 
-        UvCard()
+        UvCard(
+            uvIndex = data.uvIndex.toInt()
+        )
 
         Spacer(
             modifier = Modifier.height(16.dp)
         )
 
-        AqiCard()
+        AqiCard(
+            aqi = data.aqi
+        )
 
         Spacer(
             modifier = Modifier.height(24.dp)
