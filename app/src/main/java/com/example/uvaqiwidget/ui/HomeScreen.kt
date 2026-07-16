@@ -1,5 +1,8 @@
 package com.example.uvaqiwidget.ui
 
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.uvaqiwidget.viewmodel.WeatherViewModelFactory
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.collectAsState
@@ -23,9 +26,14 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
-    viewModel: WeatherViewModel = viewModel()
+    modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+
+    val viewModel: WeatherViewModel = viewModel(
+        factory = WeatherViewModelFactory(context)
+    )
+
     val uvIndex = viewModel.uvIndex.collectAsState()
 
     LaunchedEffect(Unit) {

@@ -1,5 +1,7 @@
 package com.example.uvaqiwidget.viewmodel
 
+import android.util.Log
+import com.example.uvaqiwidget.location.LocationHelper
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -9,7 +11,8 @@ import kotlinx.coroutines.launch
 
 
 class WeatherViewModel(
-    private val repository: WeatherRepository = WeatherRepository()
+    private val repository: WeatherRepository = WeatherRepository(),
+    private val locationHelper: LocationHelper
 ) : ViewModel() {
 
 
@@ -20,12 +23,28 @@ class WeatherViewModel(
 
     fun loadUvIndex() {
 
-        viewModelScope.launch {
+        locationHelper.getCurrentLocation { latitude, longitude ->
 
-            _uvIndex.value = repository.getCurrentUv(
-                latitude = 52.52,
-                longitude = 13.41
-            )
+            viewModelScope.launch {
+
+                try {
+
+                    val uv = repository.getCurrentUv(
+                        latitude = latitude,
+                        longitude = longitude
+                    )
+
+                    _uvIndex.value = uv
+
+                } catch (e: Exception) {
+
+                    Log.e(
+                        "WEATHER_ERROR",
+                        "error: ${e.message}",
+                        e
+                    )
+                }
+            }
         }
     }
 }
