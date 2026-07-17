@@ -1,5 +1,6 @@
 package com.example.uvaqiwidget.viewmodel
 
+import com.example.uvaqiwidget.ui.state.WeatherUiState
 import android.util.Log
 import com.example.uvaqiwidget.location.LocationHelper
 import androidx.lifecycle.ViewModel
@@ -16,9 +17,12 @@ class WeatherViewModel(
 ) : ViewModel() {
 
 
-    private val _uvIndex = MutableStateFlow(0.0)
+    private val _uiState =
+        MutableStateFlow<WeatherUiState>(
+            WeatherUiState.Loading
+        )
 
-    val uvIndex = _uvIndex.asStateFlow()
+    val uiState = _uiState.asStateFlow()
 
 
     fun loadUvIndex() {
@@ -34,7 +38,8 @@ class WeatherViewModel(
                         longitude = longitude
                     )
 
-                    _uvIndex.value = uv
+                    _uiState.value =
+                        WeatherUiState.Success(uv)
 
                 } catch (e: Exception) {
 
@@ -43,6 +48,11 @@ class WeatherViewModel(
                         "error: ${e.message}",
                         e
                     )
+
+                    _uiState.value =
+                        WeatherUiState.Error(
+                            e.message ?: "Unknown error"
+                        )
                 }
             }
         }

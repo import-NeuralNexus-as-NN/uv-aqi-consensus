@@ -1,10 +1,10 @@
 package com.example.uvaqiwidget.ui
 
+import com.example.uvaqiwidget.ui.state.WeatherUiState
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.uvaqiwidget.viewmodel.WeatherViewModelFactory
 import androidx.compose.runtime.LaunchedEffect
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.collectAsState
 import com.example.uvaqiwidget.viewmodel.WeatherViewModel
 import com.example.uvaqiwidget.data.AirQualityData
@@ -34,7 +34,7 @@ fun HomeScreen(
         factory = WeatherViewModelFactory(context)
     )
 
-    val uvIndex = viewModel.uvIndex.collectAsState()
+    val uiState = viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.loadUvIndex()
@@ -63,9 +63,30 @@ fun HomeScreen(
             modifier = Modifier.height(24.dp)
         )
 
-        UvCard(
-            uvIndex = uvIndex.value.toInt()
-        )
+        when (val state = uiState.value) {
+
+            WeatherUiState.Loading -> {
+
+                Text(
+                    text = "Loading..."
+                )
+            }
+
+            is WeatherUiState.Success -> {
+
+                UvCard(
+                    uvIndex = state.uvIndex.toInt()
+                )
+            }
+
+            is WeatherUiState.Error -> {
+
+                Text(
+                    text = state.message,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        }
 
         Spacer(
             modifier = Modifier.height(16.dp)
