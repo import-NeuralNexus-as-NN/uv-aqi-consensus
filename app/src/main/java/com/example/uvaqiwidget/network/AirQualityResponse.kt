@@ -5,17 +5,14 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data class OpenMeteoResponse(
-    val hourly: HourlyData
+data class AirQualityResponse(
+    val hourly: AirQualityHourly
 )
 
 
 @Serializable
-data class HourlyData(
+data class AirQualityHourly(
     val time: List<String>,
-
-    @SerialName("uv_index")
-    val uvIndex: List<Double>,
 
     @SerialName("european_aqi")
     val europeanAqi: List<Double?>

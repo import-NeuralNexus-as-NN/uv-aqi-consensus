@@ -33,13 +33,13 @@ class WeatherViewModel(
 
                 try {
 
-                    val uv = repository.getCurrentUv(
+                    val weather = repository.getCurrentWeather(
                         latitude = latitude,
                         longitude = longitude
                     )
 
                     _uiState.value =
-                        WeatherUiState.Success(uv)
+                        WeatherUiState.Success(weather)
 
                 } catch (e: Exception) {
 

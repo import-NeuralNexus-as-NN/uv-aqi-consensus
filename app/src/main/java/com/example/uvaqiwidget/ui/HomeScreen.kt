@@ -7,7 +7,6 @@ import com.example.uvaqiwidget.viewmodel.WeatherViewModelFactory
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import com.example.uvaqiwidget.viewmodel.WeatherViewModel
-import com.example.uvaqiwidget.data.AirQualityData
 import com.example.uvaqiwidget.ui.components.AqiCard
 import com.example.uvaqiwidget.ui.components.UvCard
 import androidx.compose.foundation.layout.Arrangement
@@ -40,12 +39,6 @@ fun HomeScreen(
         viewModel.loadUvIndex()
     }
 
-    val data = AirQualityData(
-        uvIndex = 7.0,
-        aqi = 35,
-        location = "Berlin"
-    )
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -75,7 +68,15 @@ fun HomeScreen(
             is WeatherUiState.Success -> {
 
                 UvCard(
-                    uvIndex = state.uvIndex.toInt()
+                    uvIndex = state.weatherData.uvIndex.toInt()
+                )
+
+                Spacer(
+                    modifier = Modifier.height(16.dp)
+                )
+
+                AqiCard(
+                    aqi = state.weatherData.aqi?.toInt() ?: 0
                 )
             }
 
@@ -87,14 +88,6 @@ fun HomeScreen(
                 )
             }
         }
-
-        Spacer(
-            modifier = Modifier.height(16.dp)
-        )
-
-        AqiCard(
-            aqi = data.aqi
-        )
 
         Spacer(
             modifier = Modifier.height(24.dp)
