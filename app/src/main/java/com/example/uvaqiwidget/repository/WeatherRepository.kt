@@ -27,8 +27,30 @@ class WeatherRepository(
             longitude = longitude
         )
 
+        val currentHour = java.time.LocalDateTime.now(
+            java.time.ZoneOffset.UTC
+        )
+            .withMinute(0)
+            .withSecond(0)
+            .withNano(0)
+
+        val currentUvIndex = weatherResponse.hourly.time
+            .indexOfFirst { time ->
+                time == currentHour.toString()
+            }
+            .let { index ->
+                if (index >= 0) {
+                    weatherResponse.hourly.uvIndex[index]
+                } else {
+                    0.0
+                }
+            }
+
         return WeatherData(
-            uvIndex = weatherResponse.hourly.uvIndex.maxOrNull() ?: 0.0,
+            uvIndex = currentUvIndex,
+
+            maxUvToday = weatherResponse.hourly.uvIndex.maxOrNull() ?: 0.0,
+
             aqi = airQualityResponse.hourly.europeanAqi.firstOrNull()
         )
     }

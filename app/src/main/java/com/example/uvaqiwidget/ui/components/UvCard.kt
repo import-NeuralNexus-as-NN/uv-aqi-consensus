@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun UvCard(
     uvIndex: Int = 7,
+    maxUvToday: Int,
     description: String
 ) {
     Card(
@@ -36,6 +37,10 @@ fun UvCard(
 
             Text(
                 text = description
+            )
+
+            Text(
+                text = "Максимум сегодня: $maxUvToday"
             )
         }
     }

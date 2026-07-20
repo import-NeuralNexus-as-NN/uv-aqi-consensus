@@ -71,6 +71,9 @@ fun HomeScreen(
 
                 UvCard(
                     uvIndex = state.weatherData.uvIndex.toInt(),
+
+                    maxUvToday = state.weatherData.maxUvToday.toInt(),
+
                     description = getUvDescription(
                         state.weatherData.uvIndex.toInt()
                     )
