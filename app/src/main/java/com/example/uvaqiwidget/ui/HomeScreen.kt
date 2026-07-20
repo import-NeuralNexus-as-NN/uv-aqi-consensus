@@ -95,7 +95,7 @@ fun HomeScreen(
 
         Button(
             onClick = {
-                // позже добавим обновление данных
+                viewModel.loadUvIndex()
             }
         ) {
 

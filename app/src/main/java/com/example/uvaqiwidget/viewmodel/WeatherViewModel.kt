@@ -27,6 +27,8 @@ class WeatherViewModel(
 
     fun loadUvIndex() {
 
+        _uiState.value = WeatherUiState.Loading
+
         locationHelper.getCurrentLocation { latitude, longitude ->
 
             viewModelScope.launch {
