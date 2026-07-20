@@ -1,5 +1,6 @@
 package com.example.uvaqiwidget.ui.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -12,9 +13,12 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun UvCard(
-    uvIndex: Int = 7
+    uvIndex: Int = 7,
+    description: String
 ) {
-    Card {
+    Card(
+        modifier = Modifier.fillMaxWidth()
+    ) {
 
         Column(
             modifier = Modifier.padding(20.dp)
@@ -31,7 +35,7 @@ fun UvCard(
             )
 
             Text(
-                text = "Высокий уровень"
+                text = description
             )
         }
     }

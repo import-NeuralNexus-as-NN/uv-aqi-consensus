@@ -1,5 +1,7 @@
 package com.example.uvaqiwidget.ui
 
+import com.example.uvaqiwidget.utils.getAqiDescription
+import com.example.uvaqiwidget.utils.getUvDescription
 import com.example.uvaqiwidget.ui.state.WeatherUiState
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -68,7 +70,10 @@ fun HomeScreen(
             is WeatherUiState.Success -> {
 
                 UvCard(
-                    uvIndex = state.weatherData.uvIndex.toInt()
+                    uvIndex = state.weatherData.uvIndex.toInt(),
+                    description = getUvDescription(
+                        state.weatherData.uvIndex.toInt()
+                    )
                 )
 
                 Spacer(
@@ -76,7 +81,10 @@ fun HomeScreen(
                 )
 
                 AqiCard(
-                    aqi = state.weatherData.aqi?.toInt() ?: 0
+                    aqi = state.weatherData.aqi?.toInt() ?: 0,
+                    description = getAqiDescription(
+                        state.weatherData.aqi?.toInt() ?: 0
+                    )
                 )
             }
 
