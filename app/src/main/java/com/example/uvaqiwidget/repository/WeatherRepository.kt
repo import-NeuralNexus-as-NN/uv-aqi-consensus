@@ -1,5 +1,6 @@
 package com.example.uvaqiwidget.repository
 
+import java.time.LocalDate
 import com.example.uvaqiwidget.data.WeatherData
 import com.example.uvaqiwidget.network.AirQualityRetrofitInstance
 import com.example.uvaqiwidget.network.OpenMeteoApi
@@ -46,10 +47,22 @@ class WeatherRepository(
                 }
             }
 
+        val today = LocalDate.now()
+
+
+        val maxUvToday = weatherResponse.hourly.time
+            .zip(weatherResponse.hourly.uvIndex)
+            .filter { (time, _) ->
+                LocalDate.parse(time.substringBefore("T")) == today
+            }
+            .maxOfOrNull { (_, uv) ->
+                uv
+            } ?: 0.0
+
         return WeatherData(
             uvIndex = currentUvIndex,
 
-            maxUvToday = weatherResponse.hourly.uvIndex.maxOrNull() ?: 0.0,
+            maxUvToday = maxUvToday,
 
             aqi = airQualityResponse.hourly.europeanAqi.firstOrNull()
         )
